@@ -7,6 +7,7 @@ package audioviz;
 
 import java.io.File;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -77,6 +78,7 @@ public class PlayerController implements Initializable {
     private ArrayList<Visualizer> visualizers;
     private Visualizer currentVisualizer;
     private final Integer[] bandsList = {1, 2, 4, 8, 16, 20, 40, 60, 100, 120, 140};
+    DecimalFormat df = new DecimalFormat("#.0");
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -166,9 +168,14 @@ public class PlayerController implements Initializable {
     
     private void handleReady() {
         Duration duration = mediaPlayer.getTotalDuration();
-        lengthText.setText(duration.toString());
+        double d=duration.toMillis();
+        lengthText.setText(df.format(d));
+        //lengthText.setText(df.format(d).toString());
+//        lengthText.setText(duration.toString());
         Duration ct = mediaPlayer.getCurrentTime();
+        //double c=ct.toMillis();
         currentText.setText(ct.toString());
+         //currentText.setText(df.format(c));
         currentVisualizer.start(numBands, vizPane);
         timeSlider.setMin(0);
         timeSlider.setMax(duration.toMillis());
@@ -183,8 +190,8 @@ public class PlayerController implements Initializable {
     private void handleUpdate(double timestamp, double duration, float[] magnitudes, float[] phases) {
         Duration ct = mediaPlayer.getCurrentTime();
         double ms = ct.toMillis();
-        //currentText.setText(String.format("%.1f ms", ms));
-        currentText.setText(Double.toString(ms));
+        currentText.setText(String.format("%.1f ms", ms));
+        //currentText.setText(df.format(Double.toString(ms)));
         timeSlider.setValue(ms);
         
         currentVisualizer.update(timestamp, duration, magnitudes, phases);
