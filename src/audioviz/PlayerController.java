@@ -157,7 +157,7 @@ public class PlayerController implements Initializable {
             mediaPlayer.setAudioSpectrumListener((double timestamp, double duration, float[] magnitudes, float[] phases) -> {
                 handleUpdate(timestamp, duration, magnitudes, phases);
             });
-            //mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setAutoPlay(true);
             filePathText.setText(file.getPath());
         } catch (Exception ex) {
             errorText.setText(ex.toString());
