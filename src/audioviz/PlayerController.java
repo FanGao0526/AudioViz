@@ -169,13 +169,16 @@ public class PlayerController implements Initializable {
     private void handleReady() {
         Duration duration = mediaPlayer.getTotalDuration();
         double d=duration.toMillis();
-        lengthText.setText(df.format(d));
+        lengthText.setText(df.format(d)+" ms");
         //lengthText.setText(df.format(d).toString());
 //        lengthText.setText(duration.toString());
-        Duration ct = mediaPlayer.getCurrentTime();
-        //double c=ct.toMillis();
-        currentText.setText(ct.toString());
+//        Duration ct = mediaPlayer.getCurrentTime();
+//        //double c=ct.toMillis();
+//        currentText.setText(ct.toString());
          //currentText.setText(df.format(c));
+        Duration ct = mediaPlayer.getCurrentTime();
+        double ms = ct.toMillis();
+        currentText.setText(String.format("%.1f ms", ms));
         currentVisualizer.start(numBands, vizPane);
         timeSlider.setMin(0);
         timeSlider.setMax(duration.toMillis());
